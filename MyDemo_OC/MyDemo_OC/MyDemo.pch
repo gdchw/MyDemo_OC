@@ -1,0 +1,30 @@
+//
+//  MyDemo.pch
+//  MyDemo_OC
+//
+//  Created by GDC on 2017/3/8.
+//  Copyright © 2017年 GDC. All rights reserved.
+//
+
+#ifndef MyDemo_pch
+#define MyDemo_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "AppDelegate.h"
+#import <MBProgressHUD.h>
+
+
+/*        环信集成           */
+#define EMAppKey @"1164170308115664#com.gdc.demo"
+#import <HyphenateSDK/EMSDK.h>
+
+
+
+
+#import "MyToolsView.h"
+#import "UIView+Extension.h"
+
+
+#endif /* MyDemo_pch */

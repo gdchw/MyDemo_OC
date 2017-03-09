@@ -7,8 +7,12 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
+#import "MainController.h"
 
-@interface AppDelegate ()
+
+// EMContactManagerDelegate 监听好友申请的回调方法的协议
+@interface AppDelegate ()<EMContactManagerDelegate>
 
 @end
 
@@ -17,8 +21,28 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = [[LoginViewController alloc] init];
+    [self.window makeKeyAndVisible];
+    
+    // 环信集成
+    [self addEMCSocket];
+    
     return YES;
 }
+
+/**
+ 环信集成
+ */
+- (void)addEMCSocket {
+    EMOptions *options = [EMOptions optionsWithAppkey:EMAppKey];
+    [[EMClient sharedClient] initializeSDKWithOptions:options];
+
+}
+
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -26,15 +50,16 @@
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
 }
 
-
+// APP进入后台
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    [[EMClient sharedClient] applicationDidEnterBackground:application];
 }
 
-
+// APP将要从后台返回
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    
+    [[EMClient sharedClient] applicationWillEnterForeground:application];
 }
 
 
@@ -44,7 +69,7 @@
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
 }
 
 
